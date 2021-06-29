@@ -1,0 +1,27 @@
+{
+  "name": "template-node-typescript",
+  "version": "0.0.1",
+  "description": "Template for projects based on Node.js and Typescript",
+  "main": "build/index.js",
+  "scripts": {
+    "dev": "npm run genversion && npm run ts-run",
+    "prod": "npm run genverison && npm run build && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ts-run": "ts-node-script src/index.ts",
+    "genversion": "npx genversion --es6 --semi src/version.ts",
+    "build": "npm run genversion && tsc",
+    "start": "node build/index.js"
+  },
+  "author": "Brannon Hall",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@typescript-eslint/eslint-plugin": "^4.6.1",
+    "@typescript-eslint/parser": "^4.6.1",
+    "eslint": "^7.12.1",
+    "genversion": "^2.2.1",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {}
+}
