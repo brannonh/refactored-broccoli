@@ -8,6 +8,10 @@
   "license": "MIT",
   "devDependencies": {
     "@tsconfig/node14": "^1.0.1",
+    "@types/lodash": "^4.14.171",
     "@types/node": "^15.12.5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
   }
 }
