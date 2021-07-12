@@ -1,7 +1,8 @@
+import { Primitive } from 'type-fest';
 import { CellAttributes, CellOptions } from './types';
 import { merge as _merge, omit as _omit, pick as _pick } from 'lodash';
 
-type CellContent = boolean | number | string;
+type CellContent = Primitive;
 
 export const DefaultCellOptions: CellOptions = {
   colSpan: 1,
@@ -10,13 +11,17 @@ export const DefaultCellOptions: CellOptions = {
 };
 
 export default class Cell {
-  content: CellContent;
+  content: string;
   attributes: Partial<CellAttributes> = {};
 
   constructor(content: CellContent, options: Partial<CellOptions> = DefaultCellOptions) {
-    this.content = content;
+    this.content = String(content);
 
     // Merge passed options with default options.
     _merge(this.attributes, DefaultCellOptions, options);
+  }
+
+  toString() {
+    return `${this.content} |`;
   }
 }

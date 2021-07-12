@@ -1,5 +1,5 @@
 import { ArrayLike, TableOptions } from './types';
-import { merge } from 'lodash';
+import { merge as _merge } from 'lodash';
 import Row from './row';
 import Cell from './cell';
 
@@ -45,7 +45,7 @@ export default class Table extends ArrayLike<Row> {
     super(rows);
 
     this.options = DefaultTableOptions;
-    merge(this.options, options);
+    _merge(this.options, options);
   }
 
   toString() {

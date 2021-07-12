@@ -7,10 +7,10 @@ export default class Row extends ArrayLike<Cell> {
   }
 
   toString() {
-    return this.elements.map((curr) => {
+    return '| ' + this.elements.map((curr) => {
       return curr.toString();
     }).reduce((prev, curr) => {
       return prev + curr;
-    });
+    }) + "\n";
   }
 }
