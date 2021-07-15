@@ -1,5 +1,5 @@
 export class ArrayLike<T> {
-  protected elements: T[] = [];
+  elements: T[] = [];
 
   constructor(els: T[] = []) {
     this.elements = els;

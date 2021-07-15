@@ -1,11 +1,19 @@
+import { Primitive } from 'type-fest';
 import { Style } from './style';
 
-export type CellOptions = Omit<CellAttributes, 'x' | 'y'>;
-
-export interface CellAttributes {
-  colSpan: number;
-  rowSpan: number;
-  style: Style;
+export interface CellPosition {
   x: number;
   y: number;
 }
+
+export interface CellSpan {
+  column: number;
+  row: number;
+}
+
+export interface CellOptions {
+  span?: CellSpan;
+  style?: Style;
+}
+
+export type CellContent = Primitive;

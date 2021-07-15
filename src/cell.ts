@@ -1,27 +1,23 @@
-import { Primitive } from 'type-fest';
-import { CellAttributes, CellOptions } from './types';
 import { merge as _merge, omit as _omit, pick as _pick } from 'lodash';
-
-type CellContent = Primitive;
-
-export const DefaultCellOptions: CellOptions = {
-  colSpan: 1,
-  rowSpan: 1,
-  style: {},
-};
+import { CellContent, CellOptions, CellPosition, CellSpan } from './types';
+import { DefaultCellOptions } from './defaults';
+import { Style } from './types';
 
 export default class Cell {
-  content: string;
-  attributes: Partial<CellAttributes> = {};
+  content: string = '';
+  position: CellPosition = { x: 1, y: 1, };
+  span: CellSpan = DefaultCellOptions.span!;
+  style: Style = DefaultCellOptions.style!;
 
   constructor(content: CellContent, options: Partial<CellOptions> = DefaultCellOptions) {
     this.content = String(content);
 
     // Merge passed options with default options.
-    _merge(this.attributes, DefaultCellOptions, options);
+    _merge(this.span, DefaultCellOptions.span, options.span);
+    _merge(this.style, DefaultCellOptions.style, options.style);
   }
 
   toString() {
-    return `${this.content} |`;
+    return `    C(c: ${this.span.column}, r: ${this.span.row}, x: ${this.position.x}, y: ${this.position.y}, c: '${this.content}')`;
   }
 }
