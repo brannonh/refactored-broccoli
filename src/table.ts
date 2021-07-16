@@ -12,6 +12,10 @@ export default class Table extends ArrayLike<Row> {
   constructor(rows: Row[] = [], options: TableOptions = DefaultTableOptions) {
     super(rows);
 
+    for (const row of this.elements) {
+      row.table = this;
+    }
+
     this.options = DefaultTableOptions;
     _merge(this.options, options);
 
