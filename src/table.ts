@@ -1,4 +1,4 @@
-import { merge as _merge } from 'lodash';
+import { cloneDeep as _cloneDeep, merge as _merge } from 'lodash';
 import { ArrayLike, TableOptions } from './types';
 import { DefaultTableOptions } from './defaults';
 import Architect from './architect';
@@ -6,7 +6,7 @@ import Row from './row';
 import Cell from './cell';
 
 export default class Table extends ArrayLike<Row> {
-  options: TableOptions;
+  options: TableOptions = _cloneDeep(DefaultTableOptions);
   architect: Architect;
 
   constructor(rows: Row[] = [], options: TableOptions = DefaultTableOptions) {
@@ -16,10 +16,27 @@ export default class Table extends ArrayLike<Row> {
       row.table = this;
     }
 
-    this.options = DefaultTableOptions;
-    _merge(this.options, options);
+    _merge(this.options, DefaultTableOptions, options);
 
-    this.architect = new Architect(this);
+    this.architect = new Architect(this, true);
+  }
+
+  maxHeight() {
+    return this.elements.length;
+  }
+
+  maxWidth() {
+    let value: number = 0;
+
+    for (let r = 0; r < this.elements.length; r++) {
+      const row = this.elements[r];
+      for (let c = 0; c < row.elements.length; c++) {
+        const cell = row.elements[c];
+        value = Math.max(value, cell.position.x + (cell.span.column ?? 1));
+      }
+    }
+
+    return value;
   }
 
   appendCell(row: Row, cell: Cell) {

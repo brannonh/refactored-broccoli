@@ -7,8 +7,8 @@ export interface CellPosition {
 }
 
 export interface CellSpan {
-  column: number;
-  row: number;
+  column?: number;
+  row?: number;
 }
 
 export interface CellOptions {
@@ -17,3 +17,5 @@ export interface CellOptions {
 }
 
 export type CellContent = Primitive;
+
+export type SpanCellType = 'column' | 'row';

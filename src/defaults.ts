@@ -1,7 +1,7 @@
 import { TableOptions } from './types';
 import { CellOptions } from './types';
 
-export const DefaultCellOptions: CellOptions = {
+export const DefaultCellOptions: Required<CellOptions> = {
   span: {
     column: 1,
     row: 1,
@@ -9,7 +9,7 @@ export const DefaultCellOptions: CellOptions = {
   style: {},
 };
 
-export const DefaultTableOptions: TableOptions = {
+export const DefaultTableOptions: Required<TableOptions> = {
   border: {
     top: '─',
     topBetween: '┬',
@@ -27,7 +27,8 @@ export const DefaultTableOptions: TableOptions = {
     rightBetween: '┤',
     columnBetween: '│',
   },
-  truncate: '…',
+  columnWidths: [],
+  rowHeights: [],
   style: {
     paddingLeft: 1,
     paddingRight: 1,
@@ -41,5 +42,6 @@ export const DefaultTableOptions: TableOptions = {
       strikethrough: false,
     },
     compact: false,
-  }
+  },
+  truncate: '…',
 }
