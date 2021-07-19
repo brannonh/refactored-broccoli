@@ -5,9 +5,12 @@ import { CellPosition } from './types';
 
 export default class Architect {
   table: Table;
+  debug: boolean;
+  logOffset: number = 0;
 
-  constructor(table: Table) {
+  constructor(table: Table, debug: boolean = false) {
     this.table = table;
+    this.debug = debug;
   }
 
   blueprint() {
@@ -38,6 +41,8 @@ export default class Architect {
   }
 
   cellsConflict(cell1: Cell, cell2: Cell) {
+    this.log(`Architect: cellsConflict`, 'in');
+
     const [x1, y1]: number[]  = [cell1.position.x, cell1.position.y];
     const [x2, y2]: number[]  = [cell2.position.x, cell2.position.y];
 
@@ -49,10 +54,13 @@ export default class Architect {
     const yMax2: number = y2 - 1 + (cell2.span.row);
     const yConflicts: boolean = !(y1 > yMax2 || y2 > yMax1);
 
+    this.log(null, 'out');
     return xConflicts && yConflicts;
   }
 
   tableConflicts(x: number, y: number) {
+    this.log(`Architect: tableConflicts`, 'in');
+
     const iMax: number = Math.min(this.table.elements.length - 1, y);
     const cell: Cell = new Cell('');
     cell.position = { x, y };
@@ -61,21 +69,43 @@ export default class Architect {
       const row: Row = this.table.elements[r];
       for (let c = 0; c < row.elements.length; c++) {
         if (this.cellsConflict(cell, row.elements[c])) {
+          this.log(null, 'out');
           return true;
         }
       }
     }
 
+    this.log(null, 'out');
     return false;
   }
 
   rowConflicts(y: number, xMin: number, xMax: number) {
+    this.log(`Architect: rowConflicts`, 'in');
+
     for (let x = xMin; x < xMax; x++) {
       if (this.tableConflicts(x, y)) {
+        this.log(null, 'out');
         return false;
       }
     }
 
+    this.log(null, 'out');
     return true;
+  }
+
+  log(msg: string | null | undefined, offset: 'in' | 'out' | null | undefined = null) {
+    if (this.debug) {
+      if (offset === 'in') {
+        this.logOffset += 2;
+      }
+
+      if (msg) {
+        console.debug(' '.repeat(this.logOffset) + msg);
+      }
+
+      if (offset === 'out') {
+        this.logOffset -= 2;
+      }
+    }
   }
 }
